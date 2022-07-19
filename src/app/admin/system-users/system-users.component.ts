@@ -3,6 +3,7 @@ import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {UserAccount} from "../../models/user-account";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-system-users',
@@ -46,12 +47,12 @@ export class SystemUsersComponent implements OnInit {
     return this.registration.get("password");
   }
 
-  createUser(fullName:string,userName:string,email:string,password:string,permissionId:number){
+  createUser(fullName: string, userName: string, email: string, password: string, roleId: string) {
     this.newAccount.full_Name = fullName;
     this.newAccount.email = email;
     this.newAccount.userName = userName;
     this.newAccount.password = password;
-    this.newAccount.permissionId = permissionId;
+    this.newAccount.roleId = roleId;
     this.accountService.registerNewUser(this.newAccount).subscribe(
       (data)=>{
         // check if created successfully
@@ -60,15 +61,14 @@ export class SystemUsersComponent implements OnInit {
         this.alertType = "success"
         this.message = "User created Successfully";
       },
-      (err)=>{
+      (err) => {
         console.log(err);
         this.isVisible = true;
-        this.alertType = "danger"
-        if(!err){
-          for (let er of err.error){
-            const {description} = er
-            this.message += `${description}\n`;
-          }
+        this.alertType = "danger";
+        let { error } = err;
+        if (error) {
+          let { message } = error;
+          this.message = message;
         }
       }
     )

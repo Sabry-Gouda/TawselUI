@@ -3,7 +3,7 @@
     <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-8">
       <div class="card shadow border-0">
         <div class="pt-4 pb-4 text-center bg-primary card-header">
-          <a href="/" class="text-nowrap text-decoration-none text-light">
+          <a routerLink="/" class="text-nowrap text-decoration-none text-light">
           <span>
             <i class="fas fa-shipping-fast me-2 fs-5"></i>
             <span class="fs-5 text-light fw-bold">Tawsel App</span>
@@ -31,7 +31,7 @@
             <div class="mb-3">
               <label class="form-label">Password</label>
               <a class="text-muted text-decoration-none float-end"
-                 href="/account/forget-password">
+                 routerLink="/account/forget-password">
                 <small>Forgot your password?</small>
               </a>
               <div class="mb-0 input-group">
@@ -56,9 +56,6 @@
             <div class="mb-3 mb-0 text-center">
               <button type="submit" class="btn btn-primary w-25" [disabled]="Login.invalid"
                       (click)="checkAuthentication(newUser)">
-                <div *ngIf="isLogining" class="text-center mt-4">
-                  <i class="fa fa-spinner fa-pulse" style="font-size:14px;"></i>
-                </div>
                 Log In
               </button>
             </div>
