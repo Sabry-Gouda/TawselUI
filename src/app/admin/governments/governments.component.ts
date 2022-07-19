@@ -33,10 +33,8 @@ newGovernoment:NewGov=new NewGov();
 
   validation=new UntypedFormGroup({
     Name:new UntypedFormControl("",[Validators.required,Validators.minLength(4),Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")]),
-
-
   })
-
+  
 
   get GovName(){
     return this.validation.get("Name");

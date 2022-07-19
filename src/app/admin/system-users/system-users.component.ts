@@ -62,6 +62,9 @@ export class SystemUsersComponent implements OnInit {
   get Password(){
     return this.registration.get("password");
   }
+  get Permission(){
+    return this.registration.get("permission");
+  }
 
   get Role() {
     return this.registration.get('role');
