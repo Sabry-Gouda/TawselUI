@@ -2,49 +2,44 @@
   <div class="row">
     <h4 class="page-title">Branches</h4>
     <div class="row" style="overflow-x: auto">
-      <table class="table table-responsive table-bordered table-striped table-hover align-self-center table-sm text-center"
-             datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <table
+        class="table table-responsive table-bordered table-striped table-hover align-self-center table-sm text-center"
+        datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead class="table-secondary">
-        <tr>
-          <th class="text-nowrap">#</th>
-          <th class="text-nowrap">Name</th>
-          <th class="text-nowrap">Created Date</th>
-          <th class="text-nowrap">Status</th>
-          <th class="text-nowrap">Settings</th>
-        </tr>
+          <tr>
+            <th class="text-nowrap text-center">Name</th>
+            <th class="text-nowrap text-center">Created Date</th>
+            <th class="text-nowrap text-center">Status</th>
+            <th class="text-nowrap text-center">Settings</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let branch of branches">
-          <td>{{branch.id}}</td>
-          <td>{{branch.name}}</td>
-          <td>{{branch.createdDate | date:"yyyy-MM-dd"}}</td>
-          <td>
-            <div class="d-flex justify-content-center form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" [checked]="branch.status" onclick="return false;">
-            </div>
-          </td>
-          <td>
-            <!-- <a href="/settings/branches/{{branch.id}}" class="btn px-2 py-0 me-2 bg-success text-light text-decoration-none">
+          <tr *ngFor="let branch of branches">
+            <td>{{branch.name}}</td>
+            <td>{{branch.createdDate | date:"yyyy-MM-dd"}}</td>
+            <td>
+              <div class="d-flex justify-content-center form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" [checked]="branch.status"
+                  onclick="return false;">
+              </div>
+            </td>
+            <td>
+              <!-- <a href="/settings/branches/{{branch.id}}" class="btn px-2 py-0 me-2 bg-success text-light text-decoration-none">
               <i class="fas fa-pencil-alt"></i>
             </a>
             <a href="" class="btn px-2 py-0 bg-danger text-light text-decoration-none">
               <i class="fas fa-trash"></i>
             </a> -->
-            <button  
-            class="btn px-2 py-0 me-2 bg-success text-light text-decoration-none"
-            data-bs-toggle="modal" data-bs-target="#UpdatedBranch"
-            (click)="getUpdateBranche(branch.id)"
-            >
-              <i class="fas fa-pencil-alt"></i>
-            </button>
-            <button  
-            class="btn px-2 py-0 bg-danger text-light text-decoration-none"
-            (click)="DeleteBranche(branch.id)"
-            >
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-        </tr>
+              <button class="btn px-2 py-0 me-2 bg-success text-light text-decoration-none" data-bs-toggle="modal"
+                data-bs-target="#UpdatedBranch" (click)="getUpdateBranche(branch.id)">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button class="btn px-2 py-0 bg-danger text-light text-decoration-none"
+                (click)="DeleteBranche(branch.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -61,7 +56,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="UpdatedBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="UpdatedBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -71,11 +67,13 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="Bname"  class="form-label">Branch Name</label>
-            <input type="text" name="Branch" class="form-control" [(ngModel)]="UpdatedBranch.name"  id="exampleInputEmail1" >
+            <label for="Bname" class="form-label">Branch Name</label>
+            <input type="text" name="Branch" class="form-control" [(ngModel)]="UpdatedBranch.name"
+              id="exampleInputEmail1">
           </div>
           <div class="mb-3  form-check form-switch">
-            <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch" [(ngModel)]="UpdatedBranch.status" >
+            <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch"
+              [(ngModel)]="UpdatedBranch.status">
             <label for="BranchStatus" class="form-label">Branch Status</label>
           </div>
           <div class="mb-3">
@@ -87,50 +85,46 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="SaveUpdate()">Save</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="SaveUpdate()">Save</button>
       </div>
     </div>
   </div>
 
 </div>
 
+<!-- New Branch -->
 
-
-
-<!-- 
-  Add New Branch -->
-
-
-  <div class="modal fade" id="AddNewBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Add Branch</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="Bname"  class="form-label">Branch Name</label>
-              <input type="text" name="Branch" class="form-control" [(ngModel)]="NewBranch.name"  id="exampleInputEmail1" >
-            </div>
-            <div class="mb-3  form-check form-switch">
-              <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch" [(ngModel)]="UpdatedBranch.status" >
-              <label for="BranchStatus" class="form-label">Branch Status</label>
-            </div>
-            <div class="mb-3">
-              <select class="form-select" #cityid aria-label="Default select example">
-                <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="Saveadd(+cityid.options[cityid.selectedIndex].value)">Save</button>
-        </div>
+<div class="modal fade" id="AddNewBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Add Branch</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="Bname" class="form-label">Branch Name</label>
+            <input type="text" name="Branch" class="form-control" [(ngModel)]="NewBranch.name" id="exampleInputEmail1">
+          </div>
+          <div class="mb-3  form-check form-switch">
+            <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch"
+              [(ngModel)]="UpdatedBranch.status">
+            <label for="BranchStatus" class="form-label">Branch Status</label>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" #AddBranch aria-label="Default select example">
+              <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+          (click)="SaveAdd(+AddBranch.options[AddBranch.selectedIndex].value)">Save</button>
       </div>
     </div>
-  
   </div>
-  
+</div>

@@ -32,6 +32,10 @@ export class GovernmentService {
     return this.http.get<City[]>(`${this.BASEURL}/States/cities/${id}`,this.requestOptions)
   }
 
+  getGovernmentAvailable(): Observable<Government[]>{
+    return this.http.get<Government[]>(`${this.BASEURL}/States/Available`,this.requestOptions)
+  }
+
   insert(government:NewGov) {
 return    this.http.post<NewGov>(`${this.BASEURL}/States`,government,this.requestOptions);
   }

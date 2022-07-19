@@ -32,7 +32,9 @@ export class BranchesService {
     return this.http.get<Branches[]>(`${this.BASEURL}/Branches/statustrue`,this.requestOptions);
   }
 
-  insert(branch:NewBranch) {
+
+  insert(branch:NewBranch){
+
   return  this.http.post<NewBranch>(`${this.BASEURL}/Branches`,branch,this.requestOptions);
   }
 
