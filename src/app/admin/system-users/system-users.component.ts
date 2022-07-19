@@ -29,10 +29,10 @@ export class SystemUsersComponent implements OnInit {
   }
 
   registration=new UntypedFormGroup({
-    fullName: new UntypedFormControl("", [Validators.required, Validators.minLength(6), Validators.pattern("^[a-z|A-Z]+ [\s|\-]* [a-z|A-Z]+$")]),
-    username: new UntypedFormControl("", [Validators.required, Validators.minLength(3), Validators.pattern("^[a-z|A-Z]$")]),
+    fullName: new UntypedFormControl("", [Validators.required, Validators.minLength(6), Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")]),
+    username: new UntypedFormControl("", [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+[a-z|A-Z|0-9]*$")]),
     email:new UntypedFormControl("",[Validators.required,Validators.email]),
-    password: new UntypedFormControl("", [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")]),
+    password: new UntypedFormControl("", [Validators.required, Validators.minLength(8)]),
     role: new UntypedFormControl('', [Validators.required])
 
   })
@@ -83,15 +83,25 @@ export class SystemUsersComponent implements OnInit {
         this.isVisible = true;
         this.alertType = "success"
         this.message = "User created Successfully";
+        this.registration.reset();
       },
       (err) => {
         console.log(err);
         this.isVisible = true;
         this.alertType = "danger";
-        let { error } = err;
-        if (error) {
+        // single Error
+        if (err.hasOwnProperty("error")) {
+          let { error } = err;
           let { message } = error;
           this.message = message;
+        }
+
+        // More than Error
+        let { errors } = err
+        if (err.hasOwnProperty("errors")) {
+          for (let i = 0; i < errors.length; i++) {
+            this.message += errors[i];
+          }
         }
       }
     )

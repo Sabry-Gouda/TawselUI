@@ -61,7 +61,7 @@ export class NewcityComponent implements OnInit {
       (data)=>{
         console.log(data);
         alert("City Added Successfully")
-         this.ngOnInit();
+        this.newCityForm.reset();
       },
       (err)=>{
         console.log(err);
