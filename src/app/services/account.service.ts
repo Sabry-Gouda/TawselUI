@@ -21,11 +21,11 @@ export class AccountService {
 
   getToken(obj:Users)
   {
-    return this.client.post(this.BaseUrl+"/Account/login",obj)
+    return this.client.post(this.BaseUrl + "/Account/login", obj, this.requestOptions)
   }
 
   registerNewUser(obj:UserAccount){
-    return this.client.post(this.BaseUrl+"/Account/register",obj)
+    return this.client.post(this.BaseUrl + "/Account/register", obj, this.requestOptions)
   }
 
 }

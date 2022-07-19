@@ -1,4 +1,5 @@
 export class NewBranch {
+
   constructor(
     public name: string = '',
     public createdDate: string = "",
