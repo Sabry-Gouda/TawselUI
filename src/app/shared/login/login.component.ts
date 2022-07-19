@@ -12,14 +12,12 @@ import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 export class LoginComponent implements OnInit {
 
   newUser: Users;
-  errorMessage:string;
-  isLogining: boolean ;
+  errorMessage: string;
   passwordVisibility: boolean;
   fieldType: string;
   constructor(private accountServices:AccountService , private router:Router) {
     this.newUser = new Users();
     this.errorMessage = "";
-    this.isLogining = false;
     this.passwordVisibility = false;
     this.fieldType = "Password";
 
@@ -42,24 +40,15 @@ export class LoginComponent implements OnInit {
   checkAuthentication(user:Users)
   {
     this.accountServices.getToken(user).subscribe(
-      (data:any)=>{
-        this.isLogining=true;
+      (data: any) => {
         localStorage.setItem('token',data.token)
         localStorage.setItem('userName',data.userName)
-        localStorage.setItem('userId',data.userId)
-
-
-        console.log(data.token)
-        setTimeout(() => {
-          this.router.navigate(["/home"])
-        }, 3000);
+        localStorage.setItem('userId', data.userId)
+        this.router.navigate(["/home"])
       },
       (err)=>{console.log(err)
         this.errorMessage = "Invalid User Name Or Password";
-        this.isLogining=false;
       }
-
-
     );
   }
 

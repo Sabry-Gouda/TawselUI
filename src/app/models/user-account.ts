@@ -4,7 +4,7 @@ export class UserAccount {
     public userName: string  = "",
     public password: string = "",
     public email: string = "",
-    public permissionId: number = 0
+    public roleId: string = ''
   ) {
 
   }

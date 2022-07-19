@@ -1,7 +1,7 @@
 <app-homepage>
 <div class="container">
   <div class="row">
-    <form [formGroup]="registration" #NewUser="ngForm" class="row g-3">
+    <form [formGroup]="registration" (submit)="createUser(fullName.value,userName.value,email.value,password.value,role.options[role.selectedIndex].value)" class="row g-3">
       <div class="row">
       <h4 class="page-title col-8">Add New User</h4>
       <div *ngIf="isVisible" class="alert alert-{{alertType}} col-4 alert-dismissible fade show" role="alert">
@@ -11,56 +11,81 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label for="inputfullname" class="form-label">Full Name</label>
-        <input type="text" formControlName="fullname" #fullName class="form-control" id="inputfullname" placeholder="Full Name">
-        <div *ngIf="Fullname && Fullname.invalid && Fullname.touched" class="text-danger">
-          Full Name Required
-        </div>
-        <div *ngIf="Fullname && fullName.value && Fullname.invalid" class="text-danger">
-          Full Name isn't Valid
+        <input type="text" formControlName="fullName" #fullName class="form-control" id="inputfullname" placeholder="Full Name">
+        <div *ngIf="FullName?.invalid && (FullName?.dirty || FullName?.touched)" class="text-danger">
+          <div *ngIf="FullName?.errors?.['required']">
+            FullName is required.
+          </div>
+          <div *ngIf="FullName?.errors?.['minlength']">
+            FullName length must be greater than 6 characters.
+          </div>
+          <div *ngIf="FullName?.errors?.['pattern']">
+            Invalid FullName.
+          </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label for="inputusername" class="form-label">User Name</label>
-        <input type="text" formControlName="username"  #userName class="form-control" id="inputusername" placeholder="User Name">
-        <div *ngIf="UserName && UserName.invalid && UserName.touched" class="text-danger">
-          Email Required
+        <input type="text" formControlName="username" #userName class="form-control" id="inputusername" placeholder="User Name">
+        <div *ngIf="UserName?.invalid && (UserName?.dirty || UserName?.touched)" class="text-danger">
+          <div *ngIf="UserName?.errors?.['required']">
+            UserName is required.
+          </div>
+          <div *ngIf="UserName?.errors?.['minlength']">
+            UserName length must be greater than 3 characters.
+          </div>
+          <div *ngIf="UserName?.errors?.['pattern']">
+            UserName Must contain characters only.
+          </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label for="inputemail" class="form-label">Email</label>
         <input type="email" formControlName="email" #email class="form-control" id="inputemail" placeholder="Example@gmail.com">
-        <div *ngIf="Email && Email.invalid && Email.touched" class="text-danger">
-          Email Required
-        </div>
-        <div *ngIf="Email && email.value && Email.invalid " class="text-danger">
-          Email not valid
+        <div *ngIf="Email?.invalid && (Email?.dirty || Email?.touched)" class="text-danger">
+          <div *ngIf="Email?.errors?.['required']">
+            Email is required.
+          </div>
+          <div *ngIf="Email?.errors?.['email']">
+            Invalid Email
+          </div>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label for="inputpassword" class="form-label">Password</label>
         <input type="password" formControlName="password" #password class="form-control" id="inputpassword" placeholder="password">
-        <div *ngIf="Password && Password.invalid && Password.touched" class="text-danger">
-          Password Required
-        </div>
-        <div *ngIf="Password && password.value && Password.invalid" class="text-danger">
-          Password length must be greater than 8 character
+        <div *ngIf="Password?.invalid && (Password?.dirty || Password?.touched)" class="text-danger">
+          <div *ngIf="Password?.errors?.['required']">
+            Password is required.
+          </div>
+          <div *ngIf="Password?.errors?.['minlength']">
+            Password length must be greater than 8 characters.
+          </div>
+          <div *ngIf="Password?.errors?.['pattern']">
+            Password Must Contain:
+              - at least 1 uppercase alphabetical character A-Z.
+              - at least 1 lowercase alphabetical character a-z.
+              - at least one special character @, $, &.
+              - at least 1 numeric character 0-9
+          </div>
         </div>
 
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
-        <label for="Permission" class="form-label">Permissions</label>
-        <select id="Permission" class="form-control form-select" required #permissionId>
-          <option value="0">Permission</option>
-          <option value="1">test</option>
+        <label for="Permission" class="form-label">Role Group</label>
+        <select id="Permission" class="form-control form-select" formControlName="role" required #role>
+          <option *ngFor="let role of roles" >{{role.name}}</option>
         </select>
-        <div *ngIf="!permissionId.value" class="text-danger">
-          Please Select a Permission
+        <div *ngIf="Role?.invalid && (Role?.dirty || Role?.touched)" class="text-danger">
+          <div *ngIf="Role?.errors?.['required']">
+            Government is required.
+          </div>
         </div>
       </div>
 
       <div class="col-12">
-        <button type="submit" class="btn btn-primary" [disabled]="registration.invalid" (click)="createUser(fullName.value,userName.value,email.value,password.value,+permissionId.options[permissionId.selectedIndex].value)">Save</button>
+        <button type="submit" class="btn btn-primary" [disabled]="registration.invalid">Save</button>
       </div>
     </form>
   </div>

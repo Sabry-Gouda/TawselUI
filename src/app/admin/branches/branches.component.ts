@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import { City } from 'src/app/models/city';
@@ -17,7 +18,9 @@ export class BranchesComponent implements OnInit, OnDestroy {
   cities: City[] = [];
    UpdatedBranch:Branches=new Branches();
    NewBranch:NewBranch=new NewBranch();
+
 myData=new Date();
+
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -25,8 +28,13 @@ myData=new Date();
   constructor(
     private branchesService: BranchesService,
     private cityCervice: CityService,
-    
-    ) { }
+
+    ) { 
+
+      
+
+
+    }
 
   ngOnDestroy(): void {
         this.dtTrigger.unsubscribe();
@@ -111,29 +119,30 @@ public DeleteBranche(id:number){
       }
     )
   }
+}
 
+Saveadd(cityid:number)
+{
+  this.NewBranch.cityId=cityid;
+  this.NewBranch.createdDate=this.myDate.toISOString()
 
+  console.log(this.NewBranch);
+  
+  this.branchesService.insert(this.NewBranch).subscribe(
+    
+    (data)=>{
+      console.log(data);
+      alert("Branch Added Successfully")
+      this.ngOnInit();
+    },
+    (err)=>{
+      console.log(err);
+
+      alert("Error Ocuured")
+
+    }
+  )
 }
 
 
-SaveAdd(ciryId:number)
-{ 
-  this.NewBranch.cityId=ciryId;
-  this.NewBranch.createdDate=this.myData.toISOString()
-console.log(this.NewBranch);
-this.branchesService.insert(this.NewBranch).subscribe(
-  (data)=>{
-    console.log(data);
-    alert("Branch Added Successfully")
-    this.ngOnInit();
-  },
-  (err)=>{
-    console.log(err);
-
-    alert("Error Ocuured")
-
-  }
-)
-
-}
 }

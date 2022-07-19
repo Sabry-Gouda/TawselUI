@@ -67,7 +67,14 @@
         <form>
           <div class="mb-3">
             <label for="governmentName" class="form-label">Government Name</label>
-            <input type="text" name="governmentName" [(ngModel)]="UpdatedGovernoment.name" class="form-control" id="governmentName" >
+            <input 
+            type="text" 
+            name="governmentName" 
+            required 
+            pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+            [(ngModel)]="UpdatedGovernoment.name" 
+            class="form-control" 
+            id="governmentName" >
           
           </div>
           <div class="mb-3  form-check form-switch">
