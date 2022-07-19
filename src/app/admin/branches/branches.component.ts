@@ -18,7 +18,8 @@ export class BranchesComponent implements OnInit, OnDestroy {
   cities: City[] = [];
    UpdatedBranch:Branches=new Branches();
    NewBranch:NewBranch=new NewBranch();
-   myDate = new Date();
+
+myData=new Date();
 
 
   dtOptions: DataTables.Settings = {};
@@ -142,10 +143,6 @@ Saveadd(cityid:number)
     }
   )
 }
-
-
-
-
 
 
 }

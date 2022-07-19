@@ -6,15 +6,13 @@
              datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead class="table-secondary">
         <tr>
-          <th class="text-nowrap">#</th>
-          <th class="text-nowrap">Name</th>
-          <th class="text-nowrap">Status</th>
-          <th class="text-nowrap">Settings</th>
+          <th class="text-nowrap text-center">Name</th>
+          <th class="text-nowrap text-center">Status</th>
+          <th class="text-nowrap text-center">Settings</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let government of allGovernments">
-          <td>{{government.id}}</td>
           <td>{{government.name}}</td>
           <td>
             <div class="d-flex justify-content-center form-check form-switch">

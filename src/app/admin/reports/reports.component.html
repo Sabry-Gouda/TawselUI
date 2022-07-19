@@ -49,7 +49,6 @@
              datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead class="table-secondary">
         <tr>
-          <th class="text-nowrap">#</th>
           <th class="text-nowrap">Serial number</th>
           <th class="text-nowrap">Status</th>
           <th class="text-nowrap">Trader</th>
@@ -67,7 +66,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let report of allReports">
-          <td>{{report.id}}</td>
+          
           <td>{{report.serialNumber}}</td>
           <td>{{report.status}}</td>
           <td>{{report.traderName}}</td>

@@ -6,16 +6,14 @@
              datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead class="table-secondary">
         <tr>
-          <th class="text-nowrap">#</th>
-          <th class="text-nowrap">Name</th>
-          <th class="text-nowrap">Created Date</th>
-          <th class="text-nowrap">Status</th>
-          <th class="text-nowrap">Settings</th>
+          <th class="text-nowrap text-center">Name</th>
+          <th class="text-nowrap text-center">Created Date</th>
+          <th class="text-nowrap text-center">Status</th>
+          <th class="text-nowrap text-center">Settings</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let branch of branches">
-          <td>{{branch.id}}</td>
           <td>{{branch.name}}</td>
           <td>{{branch.createdDate | date:"yyyy-MM-dd"}}</td>
           <td>
@@ -94,43 +92,41 @@
 
 </div>
 
+<!-- New Branch -->
 
-
-
-<!-- 
-  Add New Branch -->
-
-
-  <div class="modal fade" id="AddNewBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Add Branch</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="Bname"  class="form-label">Branch Name</label>
-              <input type="text" name="Branch" class="form-control" [(ngModel)]="NewBranch.name"  id="exampleInputEmail1" >
-            </div>
-            <div class="mb-3  form-check form-switch">
-              <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch" [(ngModel)]="UpdatedBranch.status" >
-              <label for="BranchStatus" class="form-label">Branch Status</label>
-            </div>
-            <div class="mb-3">
-              <select class="form-select" #cityid aria-label="Default select example">
-                <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="Saveadd(+cityid.options[cityid.selectedIndex].value)">Save</button>
-        </div>
+<div class="modal fade" id="AddNewBranch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Add Branch</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="Bname"  class="form-label">Branch Name</label>
+            <input type="text" name="Branch" class="form-control" [(ngModel)]="NewBranch.name"  id="exampleInputEmail1" >
+          </div>
+          <div class="mb-3  form-check form-switch">
+            <input class="form-check-input" name="Branchstatus" id="BranchStatus" type="checkbox" role="switch" [(ngModel)]="UpdatedBranch.status" >
+            <label for="BranchStatus" class="form-label">Branch Status</label>
+          </div>
+          <div class="mb-3">
+            <select class="form-select"  #AddBranch aria-label="Default select example">
+              <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="SaveAdd(+AddBranch.options[AddBranch.selectedIndex].value)">Save</button>
       </div>
     </div>
-  
   </div>
-  
+</div>
+</div>
+
+
+
+
