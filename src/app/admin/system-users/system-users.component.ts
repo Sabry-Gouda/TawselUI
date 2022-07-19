@@ -29,6 +29,8 @@ export class SystemUsersComponent implements OnInit {
     username:new UntypedFormControl("",Validators.required),
     email:new UntypedFormControl("",[Validators.required,Validators.email]),
     password:new UntypedFormControl("",[Validators.required,Validators.minLength(8)]),
+    permission:new UntypedFormControl("",[Validators.required]),
+
 
   })
 
@@ -45,6 +47,9 @@ export class SystemUsersComponent implements OnInit {
 
   get Password(){
     return this.registration.get("password");
+  }
+  get Permission(){
+    return this.registration.get("permission");
   }
 
   createUser(fullName: string, userName: string, email: string, password: string, roleId: string) {
