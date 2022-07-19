@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Branches} from "../models/branches";
+import { NewBranch } from '../models/new-branch';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class BranchesService {
     return this.http.get<Branches[]>(`${this.BASEURL}/Branches/statustrue`,this.requestOptions);
   }
 
-  insert(branch:Branches): void {
-    this.http.post<Branches>(`${this.BASEURL}/Branches`,branch,this.requestOptions);
+  insert(branch:NewBranch){
+  return  this.http.post<NewBranch>(`${this.BASEURL}/Branches`,branch,this.requestOptions);
   }
 
   update(id:number,branch:Branches) {

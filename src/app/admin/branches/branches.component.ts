@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import { City } from 'src/app/models/city';
+import { NewBranch } from 'src/app/models/new-branch';
 import { CityService } from 'src/app/services/city.service';
 import {Branches} from "../../models/branches";
 import {BranchesService} from "../../services/branches.service";
@@ -15,6 +16,8 @@ export class BranchesComponent implements OnInit, OnDestroy {
   branches: Branches[] = [];
   cities: City[] = [];
    UpdatedBranch:Branches=new Branches();
+   NewBranch:NewBranch=new NewBranch();
+myData=new Date();
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -109,6 +112,28 @@ public DeleteBranche(id:number){
     )
   }
 
+
+}
+
+
+SaveAdd(ciryId:number)
+{ 
+  this.NewBranch.cityId=ciryId;
+  this.NewBranch.createdDate=this.myData.toISOString()
+console.log(this.NewBranch);
+this.branchesService.insert(this.NewBranch).subscribe(
+  (data)=>{
+    console.log(data);
+    alert("Branch Added Successfully")
+    this.ngOnInit();
+  },
+  (err)=>{
+    console.log(err);
+
+    alert("Error Ocuured")
+
+  }
+)
 
 }
 }
