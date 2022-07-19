@@ -59,6 +59,8 @@ export class CreateOrderComponent implements OnInit {
       traderAddress: new UntypedFormControl('',[Validators.required,Validators.minLength(8),Validators.pattern('[a-z|A-Z|0-9]+')]),
     });
     this.getAllGovernments();
+    this.getAvailableGovernments();
+
     this.getAllShippingTypes();
     this.getAllPaymentMetods();
 
@@ -196,9 +198,19 @@ this.orderService.insert(this.newOrder).subscribe(
 
   private getAllGovernments() {
     this.governmentService.getAll().subscribe(data => {
-      this.governments = data;
+      // this.governments = data;
     })
   }
+
+
+   private getAvailableGovernments()
+  {
+    this.governmentService.getGovernmentAvailable().subscribe(data => {
+      this.governments = data;
+    })
+
+  }
+
 
   loadGovernmentCities(govId:number){
 
