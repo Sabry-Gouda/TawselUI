@@ -21,7 +21,7 @@ export class RoleService {
   private requestOptions = { headers: this.headers };
 
   getAll(): Observable<Role[]> {
-    return this.http.get<Role[]>(`${this.BASEURL}/Roles`, this.requestOptions);
+    return this.http.get<Role[]>(`${this.BASEURL}/CustomRoles`, this.requestOptions);
   }
 
 

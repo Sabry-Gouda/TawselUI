@@ -75,7 +75,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label for="Permission" class="form-label">Role Group</label>
         <select id="Permission" class="form-control form-select" formControlName="role" required #role>
-          <option *ngFor="let role of roles" >{{role.name}}</option>
+          <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
         </select>
         <div *ngIf="Role?.invalid && (Role?.dirty || Role?.touched)" class="text-danger">
           <div *ngIf="Role?.errors?.['required']">
