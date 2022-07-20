@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Status} from "../models/status";
+import { StatusCounts } from '../models/status-counts';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class StatusService {
   }
 
 
-  getStatusCount(id:number):Observable<number>{
-    return this.http.get<number>(`${this.BASEURL}/Status/count//${id}`,this.requestOptions);
+  getStatusCount():Observable<StatusCounts[]>{
+    return this.http.get<StatusCounts[]>(`${this.BASEURL}/Status/countAll`,this.requestOptions);
   }
 
   insert(status:Status): void {
