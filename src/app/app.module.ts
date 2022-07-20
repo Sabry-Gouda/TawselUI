@@ -26,6 +26,7 @@ import { NewcityComponent } from './admin/settings/newcity/newcity.component';
 import { ShippingCostComponent } from './admin/settings/shipping-cost/shipping-cost.component';
 import { HomePageCardsComponent } from './shared/home-page-cards/home-page-cards.component';
 import { CreateOrderComponent } from './employee/create-order/create-order.component';
+import { UnauthorizeComponent } from './shared/unauthorize/unauthorize.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CreateOrderComponent } from './employee/create-order/create-order.compo
     ShippingCostComponent,
     HomePageCardsComponent,
     CreateOrderComponent,
+    UnauthorizeComponent,
   ],
   imports: [
     BrowserModule,

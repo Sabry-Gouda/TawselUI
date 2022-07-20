@@ -1,12 +1,45 @@
 <app-settings>
   <div class="container">
     <h4 class="page-title">Shipping Cost Settings base on shipment weight</h4>
-    <div class="row">
-      <label class="form-label">The default cost of shipment (EGP) from 0 Kg to </label>
-      <input class="form-control" type="number" name="weight" id="weight" placeholder="0 Kg"> Kg =
-      <input class="form-control" type="number" name="price" id="price" placeholder="0 EGP"> EGP and Price for each additional kg =
-      <input class="form-control my-2" type="number" name="aprice" id="additionalPrice" placeholder="0 Kg">
-      <button class="btn btn-primary">Save</button>
-    </div>
+    <form [formGroup]="weightForm" (submit)="saveShipmentWeight(+highestWeightControl.value,+costControl.value,+additionalPriceControl.value)" class="row has-validation">
+      <span class="col-3 align-self-center">The default cost of shipment (EGP) from 0 Kg to </span>
+      <div class="col-3 align-self-center">
+        <input class="form-control" min="0" formControlName="highestWeight" type="number" name="weight" id="weight" placeholder="0 Kg" required #highestWeightControl [value]="weight.highestWeight">
+        <div *ngIf="highestWeight?.invalid && (highestWeight?.dirty || highestWeight?.touched)" class="text-danger">
+          <div *ngIf="highestWeight?.errors?.['required']">
+            please Enter highest Weight value
+          </div>
+          <div *ngIf="highestWeight?.errors?.['min']">
+            highestWeight value must be greater than 0
+          </div>
+        </div>
+      </div>
+      <span class="col-1 align-self-center fw-bold">Kg =</span>
+      <div class="col-3">
+        <input class="form-control align-self-center" min="0" formControlName="cost" type="number" name="price" id="price" placeholder="0 EGP" required #costControl [value]="weight.cost">
+        <div *ngIf="cost?.invalid && (cost?.dirty || cost?.touched)" class="text-danger">
+          <div *ngIf="cost?.errors?.['required']">
+            please Enter cost value
+          </div>
+          <div *ngIf="cost?.errors?.['min']">
+            Cost value must be greater than 0
+          </div>
+        </div>
+      </div>
+      <span class="col-1 align-self-center fw-bold">EGP</span>
+      <span class="col-4 align-self-center">and Price for each additional kg =</span>
+      <div class="col-6 align-self-center">
+        <input class="form-control my-2" formControlName="additionalPrice" min="0" type="number" name="aprice" id="additionalPrice" placeholder="0 Kg" #additionalPriceControl required [value]="weight.additionalCost">
+        <div *ngIf="additionalPrice?.invalid && (additionalPrice?.dirty || additionalPrice?.touched)" class="text-danger">
+          <div *ngIf="additionalPrice?.errors?.['required']">
+            please Enter additionalPrice value
+          </div>
+          <div *ngIf="additionalPrice?.errors?.['min']">
+            additionalPrice value must be greater than 0
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary col-3 float-end">Save</button>
+    </form>
   </div>
 </app-settings>

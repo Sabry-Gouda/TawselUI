@@ -66,8 +66,6 @@ export class NewcityComponent implements OnInit {
       (err)=>{
         console.log(err);
         alert("Error Ocurred")
-
-        
       }
     )
 

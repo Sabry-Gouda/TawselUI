@@ -14,6 +14,7 @@ import {NewcityComponent} from "./admin/settings/newcity/newcity.component";
 import {HomePageCardsComponent} from "./shared/home-page-cards/home-page-cards.component";
 import {ShippingCostComponent} from "./admin/settings/shipping-cost/shipping-cost.component";
 import {CreateOrderComponent} from "./employee/create-order/create-order.component";
+import { UnauthorizeComponent } from './shared/unauthorize/unauthorize.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: "settings/privileges", component: UserprivilegesComponent},
   {path: "settings/newCity", component: NewcityComponent},
   {path: "settings/shippingPrice", component: ShippingCostComponent},
+  { path: "unauthorize", component: UnauthorizeComponent },
   {path: "**", component: ErrorComponent},
 ]
 
