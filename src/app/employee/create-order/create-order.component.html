@@ -230,6 +230,7 @@
           id="city"
           name="city"
           required
+          (change)="cityDeliveryCost(+cityControl.options[cityControl.selectedIndex].value)"
         >
           <option *ngFor="let city of cities" [value]="city.id">
             {{ city.name }}
@@ -256,6 +257,7 @@
             'is-valid': !street?.errors
           }"
           required
+          
         />
         <div
           *ngIf="street?.invalid && (street?.dirty || street?.touched)"

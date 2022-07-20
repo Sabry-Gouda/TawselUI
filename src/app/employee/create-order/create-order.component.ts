@@ -1,3 +1,4 @@
+import { data } from 'jquery';
 import { Status } from './../../models/status';
 import { OrderTypes } from './../../models/order-types';
 import { Component, OnInit } from '@angular/core';
@@ -20,6 +21,9 @@ import { Customer } from 'src/app/models/customer';
 import { formatDate } from '@angular/common';
 import { Product } from 'src/app/models/product';
 import { StatusService } from 'src/app/services/status.service';
+import { ShipmentWeight } from 'src/app/models/shipment-weight';
+import { ShipmentWeightService } from 'src/app/services/shipment-weight.service';
+import { CityService } from 'src/app/services/city.service';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -47,6 +51,7 @@ export class CreateOrderComponent implements OnInit {
   currentUser: any = localStorage.getItem("userId")?.toString();
   totalWeightVar: number = 0;
   totalCostVar: number = 0;
+  additionalCostSettings: ShipmentWeight = new ShipmentWeight();
 
   ngOnInit(): void {
     this.createOrderForm = this.formBuilder.group({
@@ -78,6 +83,16 @@ export class CreateOrderComponent implements OnInit {
     this.getAllPaymentMethods();
     this.getAllBranches()
     this.getAllOrderTypes();
+
+    // get additionalCostSettings
+    this.additionalCostService.getById(1).subscribe(
+      data => {
+        this.additionalCostSettings = data;
+      },
+      error => {
+        console.log(error);
+      }
+    )
 
   }
 
@@ -150,7 +165,9 @@ export class CreateOrderComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private orderTypeService: OrderTypeService,
     private branchesService: BranchesService,
+    private additionalCostService: ShipmentWeightService,
     private customerService: CustomerService,
+    private cityService: CityService
   ) {
   }
 
@@ -204,13 +221,13 @@ export class CreateOrderComponent implements OnInit {
     let product = new Product(++this.numberOfProducts, name, quantity, weight);
     this.totalWeightVar += product.quantity * product.weight;
     this.products.push(product);
-    this.calculateTotalCost();
     console.log(this.products);
     this.createProductForm.reset();
   }
-
-  calculateTotalCost() {
-
+  cityDeliveryCost(id: number) {
+    this.cityService.getById(id).subscribe(data => {
+      this.totalCostVar = data.costPerCity;
+    })
   }
 
   removeProduct() {
