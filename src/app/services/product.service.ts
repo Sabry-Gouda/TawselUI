@@ -28,16 +28,16 @@ export class ProductService {
     return this.http.get<Product>(`${this.BASEURL}/products/${id}`,this.requestOptions);
   }
 
-  insert(product:ProductData){
+  insert(product:Product){
 
-  return  this.http.post<ProductData>(`${this.BASEURL}/Branches`,product,this.requestOptions);
+  return  this.http.post<Product>(`${this.BASEURL}/products`,product,this.requestOptions);
   }
 
   update(id:number,product:Product) {
-    return this.http.put<Product>(`${this.BASEURL}/Branches/${id}`,product,this.requestOptions);
+    return this.http.put<Product>(`${this.BASEURL}/products/${id}`,product,this.requestOptions);
   }
 
   delete(id:number){
-  return  this.http.delete<Product>(`${this.BASEURL}/Branches/${id}`,this.requestOptions);
+    return this.http.delete<Product>(`${this.BASEURL}/products/${id}`,this.requestOptions);
   }
 }

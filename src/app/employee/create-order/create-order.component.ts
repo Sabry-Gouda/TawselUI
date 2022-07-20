@@ -24,6 +24,7 @@ import { StatusService } from 'src/app/services/status.service';
 import { ShipmentWeight } from 'src/app/models/shipment-weight';
 import { ShipmentWeightService } from 'src/app/services/shipment-weight.service';
 import { CityService } from 'src/app/services/city.service';
+import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -52,6 +53,8 @@ export class CreateOrderComponent implements OnInit {
   totalWeightVar: number = 0;
   totalCostVar: number = 0;
   additionalCostSettings: ShipmentWeight = new ShipmentWeight();
+
+
 
   ngOnInit(): void {
     this.createOrderForm = this.formBuilder.group({
@@ -167,7 +170,8 @@ export class CreateOrderComponent implements OnInit {
     private branchesService: BranchesService,
     private additionalCostService: ShipmentWeightService,
     private customerService: CustomerService,
-    private cityService: CityService
+    private cityService: CityService,
+    private productService: ProductService
   ) {
   }
 
@@ -259,7 +263,7 @@ export class CreateOrderComponent implements OnInit {
     // get new status Id
     let statusId = 1;
     this.newOrder.statusId = statusId;
-    this.newOrder.orderTypeId = orderTypeId;
+    this.newOrder.orderType = orderTypeId;
 
     // Customer Data
     this.newOrder.customerData.name = customerName;
@@ -276,7 +280,7 @@ export class CreateOrderComponent implements OnInit {
     this.newOrder.branchId = branchId;
     this.newOrder.products = this.products;
     this.newOrder.totalWeight = this.totalWeightVar;
-    this.newOrder.totalCost = this.totalCostVar;
+    this.newOrder.totalCost = this.totalCostVar + ((this.totalWeightVar - this.additionalCostSettings.highestWeight) * this.additionalCostSettings.additionalPrice) + this.additionalCostSettings.cost;
 
     console.log(this.newOrder);
 
@@ -284,7 +288,6 @@ export class CreateOrderComponent implements OnInit {
       (data) => {
         console.log(data);
         alert("Order Added Successfully")
-        this.ngOnInit();
       },
       (err) => {
         console.log(err);
@@ -292,6 +295,22 @@ export class CreateOrderComponent implements OnInit {
 
       }
     )
+    let orderId!: number;
+    this.orderService.getBySerialNumber(this.newOrder.serialNumber)
+      .subscribe(
+        data => {
+          console.log(data);
+          orderId = data.Id;
+        })
+
+    for (let product of this.products) {
+      product.orderId = orderId;
+      this.productService.insert(product)
+    }
+
+    this.alertType = "success";
+    this.isVisible = true;
+    this.message = "Order Added Successfully";
 
   }
 

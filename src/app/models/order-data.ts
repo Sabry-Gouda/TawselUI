@@ -4,11 +4,12 @@ import { Product } from "./product";
 
 export class OrderData {
   constructor(
+    public Id: number = 0,
     public userId: string = "",
     public statusId: number = 0,
-    public orderTypeId: number = 0,
+    public orderType: number = 0,
     public serialNumber: string = Guid.create().toString(),
-    public date: string = formatDate(new Date(), 'yyyy-mm-dd', 'en-US'),
+    public date: Date = new Date(),
     public customerData: { name: string, email: string, phoneNumber1: string, phoneNumber2: string } = { name: '', email: '', phoneNumber1: '', phoneNumber2: '' },
     public stateId: number = 0,
     public cityId: number = 0,
