@@ -36,16 +36,16 @@
             <input class="form-check" type="checkbox">
           </td>
           <td>{{order.serialNumber}}</td>
-          <td>{{order.date}}</td>
+          <td>{{order.date|date:"YYYY-MM-dd"}}</td>
           <td>
-            <label>{{order.customerData.name}}</label>
+            <label class="mx-2">{{order.customerData.name}}</label>
             <label>{{order.customerData.phoneNumber}}</label>
           </td>
           <td>{{order.government}}</td>
           <td class="text-nowrap">{{order.city}}</td>
           <td>{{order.orderCost}}</td>
           <td>
-            <a href="/settings/orders/{{order.id}}"
+            <a routerLink="/settings/orders/{{order.id}}"
                class="btn px-2 py-0 me-2 bg-success text-light text-decoration-none">
               <i class="fas fa-pencil-alt"></i>
             </a>
@@ -65,8 +65,12 @@
                   <div class="modal-body">
                     <div class="d-flex flex-column mx-2">
                       <label class="align-self-start">Status</label>
-                      <select class="w-25 form-control form-select w-100" #statusControl>
-                        <option>New</option>
+                      <select 
+                      class="w-25 form-control form-select w-100" 
+                      #statusControl
+                      (change)="loadOrderByStatus(+statusControl.options[statusControl.selectedIndex].value)"
+                      >
+                        <!-- <option>New</option>
                         <option>Waiting</option>
                         <option>Delivered to representative</option>
                         <option>Delivered</option>
@@ -75,7 +79,8 @@
                         <option>Canceled by recipient</option>
                         <option>Rejected with payment</option>
                         <option>Rejected with partial payment</option>
-                        <option>Rejected without payment</option>
+                        <option>Rejected without payment</option> -->
+                        <option *ngFor="let status of statuses" [value]="status.id">{{status.name}}</option>
                       </select>
                     </div>
                   </div>
@@ -88,9 +93,11 @@
             </div>
           </td>
           <td>
-            <a href="" class="btn px-2 py-0 bg-danger text-light text-decoration-none">
+            <button 
+            (click)="DelOrder(order.serialNumber)"
+            class="btn px-2 py-0 bg-danger text-light text-decoration-none">
               <i class="fas fa-trash"></i>
-            </a>
+            </button>
           </td>
           <td>
             <a href="" class="btn px-2 py-0 bg-info text-light text-decoration-none">

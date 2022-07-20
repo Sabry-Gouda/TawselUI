@@ -28,6 +28,11 @@ export class StatusService {
     return this.http.get<Status>(`${this.BASEURL}/Status/${id}`,this.requestOptions);
   }
 
+
+  getStatusCount(id:number):Observable<number>{
+    return this.http.get<number>(`${this.BASEURL}/Status/count//${id}`,this.requestOptions);
+  }
+
   insert(status:Status): void {
     this.http.post<Status>(`${this.BASEURL}/Status`,status,this.requestOptions);
   }

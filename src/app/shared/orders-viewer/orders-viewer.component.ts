@@ -41,7 +41,7 @@ export class OrdersViewerComponent implements OnInit,OnDestroy {
       this.orderService
         .filterByStatus(filter)
         .subscribe((data) => {
-          // this.orders = data
+          this.orders = data
           this.dtTrigger.next(data);
         })
     }
@@ -49,9 +49,9 @@ export class OrdersViewerComponent implements OnInit,OnDestroy {
 
   private getAllOrders() {
     this.orderService
-      .getAll()
+      .getAllDTo()
       .subscribe((data) => {
-        // this.orders = data
+        this.orders = data
         this.dtTrigger.next(data);
       })
   }
@@ -65,4 +65,42 @@ export class OrdersViewerComponent implements OnInit,OnDestroy {
         console.log(errors)
       })
   }
+
+
+  public loadOrderByStatus(id:number){
+    console.log(id);
+    
+    this.orderService
+      .filterByStatus(id)
+      .subscribe((data) => {
+        this.orders = data
+        console.log(data);
+        
+      },
+      (err)=>{
+        console.log(err);
+        
+      }
+      
+      
+      )
+
+  }
+
+
+  DelOrder(serial:string)
+  {
+this.orderService.deleteBySerial(serial).subscribe((data) => {
+
+  console.log(data);
+  alert("Order Deleted Successfully")
+  this.ngOnInit();
+},
+(err)=>{
+  console.log(err);
+  
+}
+)
+  }
+  
 }
