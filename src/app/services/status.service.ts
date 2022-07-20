@@ -44,4 +44,8 @@ export class StatusService {
   delete(id:number): void{
     this.http.delete<Status>(`${this.BASEURL}/Status/${id}`,this.requestOptions);
   }
+  filterByStatus(id:number)
+  {
+    return this.http.get(`${this.BASEURL}/Status/count/${id}`,this.requestOptions)
+  }
 }
