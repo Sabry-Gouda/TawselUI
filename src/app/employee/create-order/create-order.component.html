@@ -374,9 +374,133 @@
         class="row rounded shadow my-5 bg-white py-3 flex-nowrap justify-content-between"
       >
         <div class="col-2 flex-shrink-1 flex-grow-0">
-          <button type="button" class="btn btn-primary" (click)="newProduct()">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#newProductModel"
+          >
             Add Product
           </button>
+          <div
+            class="modal fade"
+            id="newProductModel"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">
+                    New Product
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="createProductForm" class="row">
+                    <div class="col-12 mb-3">
+                      <label for="name">Product Name</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        required
+                        id="name"
+                        placeholder="Product Name"
+                        minlength="3"
+                        formControlName="productName"
+                        #productNameControl
+                      />
+                      <div
+                        *ngIf="
+                          productName?.invalid &&
+                          (productName?.dirty || productName?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="productName?.errors?.['required']">
+                          Product Name Required
+                        </div>
+                        <div *ngIf="productName?.errors?.['minlength']">
+                          product Name length must be greater than 3 characters.
+                        </div>
+                        <div *ngIf="productName?.errors?.['pattern']">
+                          invalid product Name.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <input
+                        class="form-control"
+                        formControlName="quantity"
+                        type="number"
+                        required
+                        placeholder="Quantity"
+                        min="1"
+                        #quantityControl
+                      />
+                      <div
+                        *ngIf="
+                          quantity?.invalid &&
+                          (quantity?.dirty || quantity?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="quantity?.errors?.['required']">
+                          please Enter quantity value
+                        </div>
+                        <div *ngIf="quantity?.errors?.['min']">
+                          quantity value must be greater than 0
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <input
+                        class="form-control"
+                        type="number"
+                        formControlName="weight"
+                        required
+                        placeholder="Weight"
+                        min="1"
+                        #weightControl
+                      />
+                      <div
+                        *ngIf="
+                          weight?.invalid && (weight?.dirty || weight?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="weight?.errors?.['required']">
+                          please Enter weight value
+                        </div>
+                        <div *ngIf="weight?.errors?.['min']">
+                          weight value must be greater than 0
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary" [disabled]="createProductForm.invalid" (click)="newProduct(productNameControl.value,+quantityControl.value,+weightControl.value)">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <table
           class="table table-secondary table-hover table-responsive table-bordered text-center flex-shrink-1 flex-grow-1 flex-fill col-10"
@@ -388,168 +512,10 @@
             <th>Delete</th>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  required
-                  placeholder="Product Name"
-                  minlength="3"
-                  formControlName="productName"
-                  [(ngModel)]="product.name"
-                />
-                <div
-                  *ngIf="
-                    productName?.invalid &&
-                    (productName?.dirty || productName?.touched)
-                  "
-                  class="text-danger"
-                >
-                  <div *ngIf="productName?.errors?.['required']">
-                    Product Name Required
-                  </div>
-                  <div *ngIf="productName?.errors?.['minlength']">
-                    product Name length must be greater than 3 characters.
-                  </div>
-                  <div *ngIf="productName?.errors?.['pattern']">
-                    invalid product Name.
-                  </div>
-                </div>
-              </td>
-              <td>
-                <input
-                  class="form-control"
-                  formControlName="quantity"
-                  type="number"
-                  required
-                  placeholder="Quantity"
-                  min="1"
-                  [(ngModel)]="product.quantity"
-                />
-                <div
-                  *ngIf="
-                    quantity?.invalid && (quantity?.dirty || quantity?.touched)
-                  "
-                  class="text-danger"
-                >
-                  <div *ngIf="quantity?.errors?.['required']">
-                    please Enter quantity value
-                  </div>
-                  <div *ngIf="quantity?.errors?.['min']">
-                    quantity value must be greater than 0
-                  </div>
-                </div>
-              </td>
-              <td>
-                <input
-                  class="form-control"
-                  type="number"
-                  formControlName="weight"
-                  required
-                  placeholder="Weight"
-                  min="1"
-                  [(ngModel)]="product.weight"
-                  (change)="calculateTotalWeight()"
-                />
-                <div
-                  *ngIf="weight?.invalid && (weight?.dirty || weight?.touched)"
-                  class="text-danger"
-                >
-                  <div *ngIf="weight?.errors?.['required']">
-                    please Enter weight value
-                  </div>
-                  <div *ngIf="weight?.errors?.['min']">
-                    weight value must be greater than 0
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div
-                  class="d-flex flex-column justify-content-center align-items-center"
-                >
-                  <button
-                    type="button"
-                    (click)="removeProduct()"
-                    class="btn px-2 py-0 bg-success text-light text-decoration-none align-self-center"
-                  >
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
             <tr *ngFor="let product of products">
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  required
-                  placeholder="Product Name"
-                  minlength="3"
-                  formControlName="productName"
-                />
-                <div
-                  *ngIf="
-                    productName?.invalid &&
-                    (productName?.dirty || productName?.touched)
-                  "
-                  class="text-danger"
-                >
-                  <div *ngIf="productName?.errors?.['required']">
-                    Product Name Required
-                  </div>
-                  <div *ngIf="productName?.errors?.['minlength']">
-                    product Name length must be greater than 3 characters.
-                  </div>
-                  <div *ngIf="productName?.errors?.['pattern']">
-                    invalid product Name.
-                  </div>
-                </div>
-              </td>
-              <td>
-                <input
-                  class="form-control"
-                  formControlName="quantity"
-                  type="number"
-                  required
-                  placeholder="Quantity"
-                  min="1"
-                />
-                <div
-                  *ngIf="
-                    quantity?.invalid && (quantity?.dirty || quantity?.touched)
-                  "
-                  class="text-danger"
-                >
-                  <div *ngIf="quantity?.errors?.['required']">
-                    please Enter quantity value
-                  </div>
-                  <div *ngIf="quantity?.errors?.['min']">
-                    quantity value must be greater than 0
-                  </div>
-                </div>
-              </td>
-              <td>
-                <input
-                  class="form-control"
-                  type="number"
-                  formControlName="weight"
-                  required
-                  placeholder="Weight"
-                  min="1"
-                />
-                <div
-                  *ngIf="weight?.invalid && (weight?.dirty || weight?.touched)"
-                  class="text-danger"
-                >
-                  <div *ngIf="weight?.errors?.['required']">
-                    please Enter weight value
-                  </div>
-                  <div *ngIf="weight?.errors?.['min']">
-                    weight value must be greater than 0
-                  </div>
-                </div>
-              </td>
+              <td>{{product.name}}</td>
+              <td>{{product.quantity}}</td>
+              <td>{{product.weight}}</td>
               <td>
                 <div
                   class="d-flex flex-column justify-content-center align-items-center"
@@ -685,7 +651,7 @@
               trader Address is required.
             </div>
             <div *ngIf="traderAddress?.errors?.['minlength']">
-              trader Address length must be greater than 3 characters.
+              trader Address length must be greater than 6 characters.
             </div>
             <div *ngIf="customerName?.errors?.['pattern']">
               invalid trader Address.
@@ -694,7 +660,13 @@
         </div>
       </div>
       <div class="col-12">
-        <button type="submit" class="btn btn-primary float-end">Save</button>
+        <button
+          type="submit"
+          [disabled]="createOrderForm.invalid"
+          class="btn btn-primary float-end"
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>

@@ -31,6 +31,7 @@ export class CreateOrderComponent implements OnInit {
   message: string = "";
   isVisible: boolean = false;
   createOrderForm!: UntypedFormGroup;
+  createProductForm!: UntypedFormGroup;
   submitted: boolean = false;
   orderTypes: OrderTypes[] = [];
   governments: Government[] = [];
@@ -39,19 +40,18 @@ export class CreateOrderComponent implements OnInit {
   paymentMethods: Payment[] = [];
   branches: Branches[] = [];
   isShippableToVillage: boolean = false;
-  numberOfProducts: number = 1;
+  numberOfProducts: number = 0;
   products: Product[] = [];
   newOrder: OrderData = new OrderData();
   createdCustomerId: number = 0;
   currentUser: any = localStorage.getItem("userId")?.toString();
   totalWeightVar: number = 0;
   totalCostVar: number = 0;
-  product: Product = new Product(this.numberOfProducts);
 
   ngOnInit(): void {
     this.createOrderForm = this.formBuilder.group({
       orderType: new UntypedFormControl('', [Validators.required]),
-      customerName: new UntypedFormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-z|A-Z]+')]),
+      customerName: new UntypedFormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")]),
       phoneNumber1: new UntypedFormControl('', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]),
       phoneNumber2: new UntypedFormControl('', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]),
       email: new UntypedFormControl('', [Validators.required, Validators.email]),
@@ -61,15 +61,17 @@ export class CreateOrderComponent implements OnInit {
       shippingMethod: new UntypedFormControl('', [Validators.required]),
       paymentMethod: new UntypedFormControl('', [Validators.required]),
       branch: new UntypedFormControl('', [Validators.required]),
-      orderCost: new UntypedFormControl('', [Validators.required]),
-      totalWeight: new UntypedFormControl('', [Validators.required]),
+      orderCost: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+      totalWeight: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
       traderPhoneNumber: new UntypedFormControl('', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]),
       traderAddress: new UntypedFormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('[a-z|A-Z|0-9]+')]),
-      productName: new UntypedFormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-z|A-Z]+')]),
+    });
+
+    this.createProductForm = this.formBuilder.group({
+      productName: new UntypedFormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z 0-9]*)*$")]),
       quantity: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
       weight: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
     });
-
 
     this.getAvailableGovernments();
     this.getAllShippingTypes();
@@ -126,15 +128,15 @@ export class CreateOrderComponent implements OnInit {
   }
 
   public get productName() {
-    return this.createOrderForm.get('productName');
+    return this.createProductForm.get('productName');
   }
 
   public get quantity() {
-    return this.createOrderForm.get('quantity');
+    return this.createProductForm.get('quantity');
   }
 
   public get weight() {
-    return this.createOrderForm.get('weight');
+    return this.createProductForm.get('weight');
   }
 
 
@@ -198,22 +200,13 @@ export class CreateOrderComponent implements OnInit {
     })
   }
 
-  newProduct() {
-    let product = new Product();
-    this.numberOfProducts++
-    this.products.push(this.product);
-    this.calculateTotalWeight();
+  newProduct(name: string, quantity: number, weight: number) {
+    let product = new Product(++this.numberOfProducts, name, quantity, weight);
+    this.totalWeightVar += product.quantity * product.weight;
+    this.products.push(product);
     this.calculateTotalCost();
     console.log(this.products);
-
-  }
-
-  calculateTotalWeight() {
-    console.log("Triggered");
-    for (let product of this.products) {
-      this.totalWeightVar += product.quantity * product.weight;
-    }
-    return this.totalWeightVar;
+    this.createProductForm.reset();
   }
 
   calculateTotalCost() {
