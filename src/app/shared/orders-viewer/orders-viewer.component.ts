@@ -94,7 +94,7 @@ this.orderService.deleteBySerial(serial).subscribe((data) => {
 
   console.log(data);
   alert("Order Deleted Successfully")
-  
+  this.ngOnInit();
 },
 (err)=>{
   console.log(err);
