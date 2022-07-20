@@ -40,4 +40,5 @@ export class HomePageCardsComponent implements OnInit {
         console.log(error)
       })
   }
+
 }

@@ -16,13 +16,16 @@ export class OrderService {
   getAll(): Observable<OrderData[]>{
     return this.http.get<OrderData[]>(`${this.baseUrl}/Orders`);
   }
+  getAllDTo(): Observable<Order[]>{
+    return this.http.get<Order[]>(`${this.baseUrl}/OrderDetails`);
+  }
 
   getById(id:number): Observable<OrderData>{
     return this.http.get<OrderData>(`${this.baseUrl}/Orders/${id}`);
   }
 
-  filterByStatus(statusId:number):Observable<OrderData[]>{
-    return this.http.get<OrderData[]>(`${this.baseUrl}/Orders/${statusId}`);
+  filterByStatus(statusId:number):Observable<Order[]>{
+    return this.http.get<Order[]>(`${this.baseUrl}/OrderDetails/ststus/${statusId}`);
   }
   insert(order:OrderData) {
 return    this.http.post<OrderData>(`${this.baseUrl}/orders`,order);
@@ -34,6 +37,10 @@ return    this.http.post<OrderData>(`${this.baseUrl}/orders`,order);
 
   delete(id:number): void{
     this.http.delete<OrderData>(`${this.baseUrl}/orders/${id}`);
+  }
+
+  deleteBySerial(serial:string){
+   return this.http.delete(`${this.baseUrl}/Orders/serial/${serial}`);
   }
 
 }

@@ -18,6 +18,8 @@ import {OrderData} from "../../models/order-data";
 import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from 'src/app/models/customer';
 import { formatDate } from '@angular/common';
+import { ProductService } from 'src/app/services/product.service';
+import { ProductData } from 'src/app/models/product-data';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -39,6 +41,7 @@ export class CreateOrderComponent implements OnInit {
   newOrder:OrderData=new OrderData();
   newCustomer:Customer=new Customer();
   createdCustomerId:number=0;
+  newPro:ProductData=new ProductData();
   currentuser:any=localStorage.getItem("userId")?.toString();
   ngOnInit(): void {
     this.createOrderForm = this.formBuilder.group({
@@ -126,6 +129,7 @@ export class CreateOrderComponent implements OnInit {
     private getorderType: OrderTypeService,
     private Branchservice: BranchesService,
     private customerservice: CustomerService,
+    private productService:ProductService,
 
 
 
@@ -186,7 +190,31 @@ this.orderService.insert(this.newOrder).subscribe(
     alert("Error Occured")
 
   }
+
 )
+//gets table
+var oTable:HTMLTableElement =<HTMLTableElement> document.getElementById('myTable');
+
+//gets rows of table
+var rowLength = oTable.rows.length;
+
+//loops through rows    
+for (let i = 1; i < rowLength; i++){
+
+   
+
+   //loops through each cell in current row
+   for(var j = 0; j < 3; j++){
+      /* get your cell info here */
+      /* var cellVal = oCells.item(j).innerHTML; */
+      // this.newPro.name= <string>oTable.rows.item(i)
+   }
+}
+
+
+
+
+
 
   }
 
