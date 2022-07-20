@@ -27,6 +27,8 @@ export class OrderService {
   filterByStatus(statusId:number):Observable<Order[]>{
     return this.http.get<Order[]>(`${this.baseUrl}/OrderDetails/ststus/${statusId}`);
   }
+
+
   insert(order:OrderData) {
 return    this.http.post<OrderData>(`${this.baseUrl}/orders`,order);
   }

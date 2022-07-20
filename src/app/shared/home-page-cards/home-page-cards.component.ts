@@ -3,6 +3,7 @@ import {Status} from "../../models/status";
 import {StatusService} from "../../services/status.service";
 import {OrderService} from "../../services/order.service";
 import {data} from "jquery";
+import { StatusCounts } from 'src/app/models/status-counts';
 
 
 @Component({
@@ -12,41 +13,29 @@ import {data} from "jquery";
 })
 export class HomePageCardsComponent implements OnInit {
 
-  statuses: Status[] = [];
-  ordersCount: number = 0
-  counts:number []=[];
+  statuses: StatusCounts[] = [];
+
 
   constructor(private statusService: StatusService, private orderService: OrderService) {
   }
 
   ngOnInit(): void {
     this.getAllStatuses();
-    this.getNumberOfProductByStatus()
+
   }
 
   private getAllStatuses() {
     this.statusService
-      .getAll()
+      .getStatusCount()
       .subscribe((data) => {
         this.statuses = data
+        console.log(data);
+
       }, (error) => {
         console.log(error);
       });
   }
 
-  public getNumberOfProductByStatus() : any {
-    for (let i of this.statuses)
-    {
-      
-      this.statusService.filterByStatus(i.id)
-      .subscribe((data:any) => {
-        console.log(data);
-        
-         this.counts.push(data)
-      },error => {
-        console.log(error)
-      })
-    }
-  }
+
 
 }
