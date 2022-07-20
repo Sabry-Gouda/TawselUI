@@ -30,7 +30,9 @@ export class ShippingCostComponent implements OnInit {
   getWeightSettings() {
     this.shipmentWeightService.getById(1)
       .subscribe(
-        data => { this.weight = data },
+        data => {
+          this.weight = data
+        },
         err => {
           console.log(err);
         })
@@ -52,13 +54,10 @@ export class ShippingCostComponent implements OnInit {
 
 
 
-  saveShipmentWeight(highestWeight: number, cost: number, additionalPrice: number) {
-    this.weight.highestWeight = highestWeight;
-    this.weight.cost = cost;
-    this.weight.additionalCost = additionalPrice;
-
+  saveShipmentWeight() {
     this.shipmentWeightService
-      .update(1, this.weight);
+      .update(this.weight);
+    alert('Cost Setting Updated Successfully');
   }
 
 }

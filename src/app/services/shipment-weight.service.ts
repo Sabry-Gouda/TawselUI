@@ -24,7 +24,7 @@ export class ShipmentWeightService {
     return this.http.get<ShipmentWeight>(`${this.BASEURL}/ShipmentWeights/${id}`, this.requestOptions);
   }
 
-  update(id: number, newValue: ShipmentWeight): void {
-    this.http.put(`${this.BASEURL}/ShipmentWeights`, newValue, this.requestOptions)
+  update(obj: ShipmentWeight): void {
+    this.http.put<ShipmentWeight>(`${this.BASEURL}/ShipmentWeights`, obj, this.requestOptions);
   }
 }
